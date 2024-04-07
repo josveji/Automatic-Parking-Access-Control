@@ -1,5 +1,5 @@
 /* 
-Estudiante: Josué María Jiménez Ramírez 
+Estudiante: Josué María Jiménez Ramírez, C13987 
 Profesor: Enrique Coen Alfaro
 Curso: Circuitos Digitales II
 Periodo: I - 2024
@@ -31,7 +31,7 @@ output reg alarm_1, alarm_2, open_gate, close_gate; // Declarando las salidas
 
 // Declarando variables internas
 reg [4:0] state; 
-reg [2:0] count0; // Para contar los intentos de contraseña
+reg [3:0] count0; // Para contar los intentos de contraseña
 
 reg [4:0] nxt_state; 
 reg [4:0] nxt_count0;
@@ -96,20 +96,19 @@ always @(*) begin
                     espera que pase el carro*/
                 end
        
+      // FALTA AÑADIR CÓMO SE LLEGA AL ESTADO (3)
+
       // Estado (3)
         4'b0011: begin
-          
+                    if (psswrd_atmpt == psswrd) begin 
+                      nxt_state = 4'b0000; // Va al estado (0)
+                      alarm_2 = 0; // Desactiva la alarma 2
+                    end
+                    else nxt_state = 4'b0011; /* Vuelve al estado (3) hasta
+                    que la clave se digite correctamente*/
                  end
-         
-
 
     endcase // Acá terminan los casos de estado
-
-
-
-// Estado 0 - Esperando un carro 
-
-
 
 end // Fin de lógica combinacional @(*)
 
