@@ -40,6 +40,7 @@ module tests (
     initial begin
 
     // Activa el reset para iniciar en el estado Esperando carro (0)
+    clk = 0; 
     #0 rst = 1;
     #1 rst = 0;
 
@@ -126,11 +127,15 @@ module tests (
     // Ingresando contraseña incorrecta
     #2 psswrd_atmpt = 01010111; // Se ingresa contraseña correcta
     #2 try_psswrd = 1; // Se activa la señal para verificar contraseña
-    #2 try_psswrd = 0; /* Se desactiva la señal verificar contraseña,
-    pasa al estado (0), se desactiva la alarma de bloqueo*/    
+    //#2 try_psswrd = 0; /* Se desactiva la señal verificar contraseña,
+    //pasa al estado (0), se desactiva la alarma de bloqueo*/    
+    #0 sensor_1 = 0; // Se desactiva sensor 1 
+    #0 sensor_2 = 0; // Se desactiva sensor 2
 
     // --------------------------Fin Prueba 4---------------------------
-    
+    #200 $finish; // Fin de las pruebas
     end // Fin de las pruebas
+
+    
 
 endmodule

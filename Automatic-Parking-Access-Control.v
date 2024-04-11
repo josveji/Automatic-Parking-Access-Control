@@ -121,6 +121,8 @@ always @(*) begin
                     if (try_psswrd && psswrd_atmpt == psswrd) begin 
                       alarm_2 = 0; // Desactiva la alarma 2
                       nxt_state = 4'b0000; // Va al estado (0)
+                      //sensor_1 = 0; // Probando 
+                      //sensor_2 = 0; // Probando 
                     end
                     else nxt_state = 4'b0011; /* Vuelve al estado (3) hasta
                     que la clave se digite correctamente*/

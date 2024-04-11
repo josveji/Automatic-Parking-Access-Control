@@ -15,7 +15,8 @@ Descripción del archivo: Este es el código encargado de evaluar las pruebas de
 
 module apac_tb;
 
-    wire clk, rst, sensor_1, sensor_2, try_psswrd, psswrd_atmpt; // Entradas
+    wire clk, rst, sensor_1, sensor_2, try_psswrd; // Entradas
+    wire [7:0] psswrd_atmpt; 
     wire alarm_1, alarm_2, open_gate, close_gate; // Salidas 
 
     initial begin 
@@ -26,28 +27,28 @@ module apac_tb;
         open_gate, close_gate);
     end
 
-    // Para máquina de estados
+    // Para máquina de estados Automatic-Parking-Access-Control (apac)
     ControladorParqueo U0 (
         .clk (clk),
         .rst (rst), 
         .sensor_1 (sensor_1), 
         .sensor_2(sensor_2), 
         .try_psswrd (try_psswrd), 
-        .psswrd_atmpt (psswrd_atmpt), // Solucionar error de los 8 bits 
+        .psswrd_atmpt (psswrd_atmpt), 
         .alarm_1 (alarm_1), 
         .alarm_2 (alarm_2), 
         .open_gate (open_gate), 
         .close_gate (close_gate)
     );
     
-    // Para tester Automatic-Parking-Access-Control
+    // Para tester de Automatic-Parking-Access-Control (apac)
     tests P0 (
         .clk (clk),
         .rst (rst), 
         .sensor_1 (sensor_1), 
         .sensor_2(sensor_2), 
         .try_psswrd (try_psswrd), 
-        .psswrd_atmpt (psswrd_atmpt), // Solucionar error de los 8 bits
+        .psswrd_atmpt (psswrd_atmpt),
         .alarm_1 (alarm_1), 
         .alarm_2 (alarm_2), 
         .open_gate (open_gate), 
