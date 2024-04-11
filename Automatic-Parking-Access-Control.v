@@ -71,8 +71,8 @@ always @(*) begin
         4'b0000: begin 
                     if (sensor_1 && sensor_2) begin /* Si se activan simultáneamente
                      sensor_1 y sensor_2*/
-                        nxt_state = 4'b0011; // Va al estado (3)
-                        alarm_2 = 1; // Activa alarma de bloqueo
+                      nxt_state = 4'b0011; // Va al estado (3)
+                      alarm_2 = 1; // Activa alarma de bloqueo
                     end 
                     else if (sensor_1) nxt_state = 4'b0001; // Va al estado (1)
                     else nxt_state = 4'b0000; // Vuelve al estado (0)
@@ -81,20 +81,24 @@ always @(*) begin
       // Estado (1)
         4'b0001: begin
                     if (sensor_1 && sensor_2) begin /* Si se activan simultáneamente
-                     sensor_1 y sensor_2*/
-                        nxt_state = 4'b0011; // Va al estado (3)
-                        alarm_2 = 1; // Activa alarma de bloqueo
+                    sensor_1 y sensor_2*/
+                      nxt_state = 4'b0011; // Va al estado (3)
+                      alarm_2 = 1; // Activa alarma de bloqueo
                     end 
-                    else if (try_psswrd) begin /* Si la señal verificar y la contraseña es correcta*/
-                         open_gate = 1; // Activa señal de abrir aguja
-                         nxt_count0 = 0; // Limpia contador de intentos incorrectos
-                         nxt_state = 4'b0010; // Va al estado (2)
+                    else if (try_psswrd) begin // Si la señal verificar está activa
+                      // Si la contraseña es correcta
+                      if (psswrd_atmpt == psswrd) begin
+                        open_gate = 1; // Activa señal de abrir aguja
+                        nxt_count0 = 0; // Limpia contador de intentos incorrectos
+                        nxt_state = 4'b0010; // Va al estado (2)
+                      end
+                      else 
+                      // Si la contraseña es incorrecta
+                      if (psswrd_atmpt != psswrd) begin 
+                        nxt_count0 = count0+1; // Incrementa el contador de intentos
+                        nxt_state = 4'b0001; // Vuelve al estado (1)
+                      end 
                     end 
-                    else if (try_psswrd && psswrd_atmpt != psswrd) begin 
-                            // Si la señal verificar y la contraseña es incorrecta
-                            nxt_count0 = count0+1; // Incrementa el contador de intentos
-                            nxt_state = 4'b0001; // Vuelve al estado (1)
-                         end 
                     else if (nxt_count0 == 3) alarm_1 = 1; // Activa alarma de pin
                     else nxt_state = 4'b0001; /* Devuelve al estado (1) en
                     cualquier otro caso */
@@ -117,15 +121,14 @@ always @(*) begin
 
       // Estado (3)
         4'b0011: begin
-                    if (try_psswrd && psswrd_atmpt == psswrd) begin 
-                      alarm_2 = 0; // Desactiva la alarma 2
-                      nxt_state = 4'b0000; // Va al estado (0)
-                      //sensor_1 = 0; // Probando 
-                      //sensor_2 = 0; // Probando 
-                    end
-                    else nxt_state = 4'b0011; /* Vuelve al estado (3) hasta
-                    que la clave se digite correctamente*/
-                 end // Termina estado (3)
+                    if (try_psswrd) begin // Si la señal verificar está activa
+                      // Si la contraseña es correcta
+                      if (psswrd_atmpt == psswrd) begin
+                        alarm_2 = 0; // Apaga alarma bloqueo 
+                        nxt_state = 4'b0000; // Pasa al estado (0)
+                      end else nxt_state = 4'b0011; // Pasa al estado (3) 
+                    end 
+                end // Termina estado (3)
 
     endcase // Acá terminan los casos de estado
 
