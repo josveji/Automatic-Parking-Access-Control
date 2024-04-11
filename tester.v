@@ -25,7 +25,7 @@ module tests (
     close_gate);
 
     output clk, rst, sensor_1, sensor_2, try_psswrd; 
-    output [8:0] psswrd_atmpt;
+    output [7:0] psswrd_atmpt;
 
     input alarm_1, alarm_2, open_gate, close_gate;
 

@@ -10,12 +10,12 @@ estados para un controlador automatizado para entrada de un estacionamiento.
 
 // Declaración del módulo 
 
-module ControladorParqueo (clk, rst, sensor_1, sensor_2, try_pssrd,
+module ControladorParqueo (clk, rst, sensor_1, sensor_2, try_psswrd,
 psswrd_atmpt, alarm_1, alarm_2, open_gate, close_gate);
 
 /* sensor_1 = sensor que detecta llegada de un carro 
    sensor_2 = sensor que detecta si ya entró el carro
-   try_pssrd = una señal que indica si probar o no la contraseña
+   try_psswrd = una señal que indica si probar o no la contraseña
    psswrd_atmpt = contraseña ingresada
    alarm_1 = alarma de pin incorrecto
    alarm_2 = alarma de bloqueo 
@@ -24,7 +24,7 @@ psswrd_atmpt, alarm_1, alarm_2, open_gate, close_gate);
 */
 
 // Declarando las entradas
-input clk, rst, sensor_1, sensor_2, try_pssrd; 
+input clk, rst, sensor_1, sensor_2, try_psswrd; 
 input [7:0] psswrd_atmpt;  // Intento de contraseña
 
 
@@ -69,7 +69,8 @@ always @(*) begin
     */
       // Estado (0)
         4'b0000: begin 
-                    if (sensor_1 && sensor_2) begin // Si se activan simultáneamente sensor_1 y sensor_2
+                    if (sensor_1 && sensor_2) begin /* Si se activan simultáneamente
+                     sensor_1 y sensor_2*/
                         nxt_state = 4'b0011; // Va al estado (3)
                         alarm_2 = 1; // Activa alarma de bloqueo
                     end 
@@ -79,25 +80,31 @@ always @(*) begin
 
       // Estado (1)
         4'b0001: begin
-                    if (sensor_1 && sensor_2) begin // Si se activan simultáneamente sensor_1 y sensor_2
+                    if (sensor_1 && sensor_2) begin /* Si se activan simultáneamente
+                     sensor_1 y sensor_2*/
                         nxt_state = 4'b0011; // Va al estado (3)
                         alarm_2 = 1; // Activa alarma de bloqueo
                     end 
-                    else if (psswrd_atmpt == psswrd) begin // Si la contraseña es correcta
+                    else if (try_psswrd && psswrd_atmpt == psswrd) begin /* Si la señal
+                     verificar y la contraseña es correcta*/
                          open_gate = 1; // Activa señal de abrir aguja
                          nxt_count0 = 0; // Limpia contador de intentos incorrectos
                          nxt_state = 4'b0010; // Va al estado (2)
                     end 
-                    else begin 
+                    else if (try_psswrd && psswrd_atmpt != psswrd) begin 
+                            // Si la señal verificar y la contraseña es incorrecta
                             nxt_count0 = count0+1; // Incrementa el contador de intentos
                             nxt_state = 4'b0001; // Vuelve al estado (1)
                          end 
-                    if (nxt_count0 == 3) alarm_1 = 1; // Activa alarma de pin   
+                    else if (nxt_count0 == 3) alarm_1 = 1; // Activa alarma de pin
+                    else nxt_state = 4'b0001; /* Devuelve al estado (1) en
+                    cualquier otro caso */
                  end // Termina estado (1)
 
       // Estado (2)
         4'b0010: begin
-                    if (sensor_1 && sensor_2) begin // Si se activan simultáneamente sensor_1 y sensor_2
+                    if (sensor_1 && sensor_2) begin /* Si se activan 
+                    simultáneamente sensor_1 y sensor_2*/
                         nxt_state = 4'b0011; // Va al estado (3)
                         alarm_2 = 1; // Activa alarma de bloqueo
                     end 
@@ -111,9 +118,9 @@ always @(*) begin
 
       // Estado (3)
         4'b0011: begin
-                    if (psswrd_atmpt == psswrd) begin 
-                      nxt_state = 4'b0000; // Va al estado (0)
+                    if (try_psswrd && psswrd_atmpt == psswrd) begin 
                       alarm_2 = 0; // Desactiva la alarma 2
+                      nxt_state = 4'b0000; // Va al estado (0)
                     end
                     else nxt_state = 4'b0011; /* Vuelve al estado (3) hasta
                     que la clave se digite correctamente*/
