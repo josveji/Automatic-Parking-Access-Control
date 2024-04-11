@@ -49,7 +49,7 @@ module tests (
     #2 try_psswrd = 1; // Se activa la señal para verificar contraseña
     #2 psswrd_atmpt = 01010111; /* Ingresa la contraseña correcta, 
     pasa a estado Ingreso Autorizado (2)*/
-    #2 try_psswrd = 0; /* Se activa la señal para verificar contraseña, 
+    #4 try_psswrd = 0; /* Se activa la señal para verificar contraseña, 
     pues ya no es necesario*/
     #2 sensor_1 = 0; // Ya no se detectan carros en la entrada
     #2 sensor_2 = 1; // El carro ingresa al parqueo, pasa al estado (0) 
@@ -129,8 +129,8 @@ module tests (
     #2 try_psswrd = 1; // Se activa la señal para verificar contraseña
     //#2 try_psswrd = 0; /* Se desactiva la señal verificar contraseña,
     //pasa al estado (0), se desactiva la alarma de bloqueo*/    
-    #0 sensor_1 = 0; // Se desactiva sensor 1 
-    #0 sensor_2 = 0; // Se desactiva sensor 2
+    #2 sensor_1 = 0; // Se desactiva sensor 1 
+    #2 sensor_2 = 0; // Se desactiva sensor 2
 
     // --------------------------Fin Prueba 4---------------------------
     #200 $finish; // Fin de las pruebas
