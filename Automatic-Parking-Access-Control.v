@@ -85,8 +85,7 @@ always @(*) begin
                         nxt_state = 4'b0011; // Va al estado (3)
                         alarm_2 = 1; // Activa alarma de bloqueo
                     end 
-                    else if (try_psswrd && psswrd_atmpt == psswrd) begin /* Si la señal
-                     verificar y la contraseña es correcta*/
+                    else if (try_psswrd) begin /* Si la señal verificar y la contraseña es correcta*/
                          open_gate = 1; // Activa señal de abrir aguja
                          nxt_count0 = 0; // Limpia contador de intentos incorrectos
                          nxt_state = 4'b0010; // Va al estado (2)
