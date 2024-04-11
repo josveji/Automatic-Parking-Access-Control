@@ -10,11 +10,12 @@ estados para un controlador automatizado para entrada de un estacionamiento.
 
 // Declaración del módulo 
 
-module ControladorParqueo (clk, rst, sensor_1, sensor_2, 
+module ControladorParqueo (clk, rst, sensor_1, sensor_2, try_pssrd,
 psswrd_atmpt, alarm_1, alarm_2, open_gate, close_gate);
 
 /* sensor_1 = sensor que detecta llegada de un carro 
    sensor_2 = sensor que detecta si ya entró el carro
+   try_pssrd = una señal que indica si probar o no la contraseña
    psswrd_atmpt = contraseña ingresada
    alarm_1 = alarma de pin incorrecto
    alarm_2 = alarma de bloqueo 
@@ -23,8 +24,8 @@ psswrd_atmpt, alarm_1, alarm_2, open_gate, close_gate);
 */
 
 // Declarando las entradas
-input clk, rst, sensor_1, sensor_2; 
-input [8:0] psswrd_atmpt;  
+input clk, rst, sensor_1, sensor_2, try_pssrd; 
+input [7:0] psswrd_atmpt;  // Intento de contraseña
 
 
 output reg alarm_1, alarm_2, open_gate, close_gate; // Declarando las salidas
@@ -37,7 +38,7 @@ reg [4:0] nxt_state;
 reg [4:0] nxt_count0;
 
 // Declarando contraseña
-localparam [8:0] psswrd = 01010111; // Es el número 87 
+localparam [7:0] psswrd = 01010111; // Es el número 87 
 
 always @(posedge clk) begin
   if (rst) begin
