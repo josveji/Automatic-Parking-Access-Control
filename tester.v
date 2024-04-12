@@ -124,7 +124,7 @@ module tests (
     #2 try_psswrd = 0; /* Se desactiva la señal verificar contraseña,
     vuelve al estado (3)*/
 
-    // Ingresando contraseña incorrecta
+    // Ingresando contraseña correcta
     #2 psswrd_atmpt = 01010111; // Se ingresa contraseña correcta
     #2 try_psswrd = 1; // Se activa la señal para verificar contraseña
     //#2 try_psswrd = 0; /* Se desactiva la señal verificar contraseña,
