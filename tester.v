@@ -29,7 +29,8 @@ module tests (
 
     input alarm_1, alarm_2, open_gate, close_gate;
 
-    reg clk, rst, sensor_1, sensor_2, try_psswrd, psswrd_atmpt; 
+    reg clk, rst, sensor_1, sensor_2, try_psswrd;
+    reg [7:0] psswrd_atmpt; // Declarando con los bits necesarios
     wire alarm_1, alarm_2, open_gate, close_gate;
 
     always begin // Crea la onda de clk
