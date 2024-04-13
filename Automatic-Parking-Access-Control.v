@@ -69,6 +69,10 @@ always @(*) begin
     */
       // Estado (0)
         4'b0000: begin 
+                    close_gate = 0; // Valor incial de close_gate
+                    open_gate = 0; // Valor incial de open_gate
+                    alarm_1 = 0; // Valor incial de alarm_1
+                    alarm_2 = 0; // Valor incial de alarm_2
                     if (sensor_1 && sensor_2) begin /* Si se activan simultáneamente
                      sensor_1 y sensor_2*/
                       nxt_state = 4'b0011; // Va al estado (3)
@@ -135,5 +139,5 @@ always @(*) begin
 end // Fin de lógica combinacional @(*)
 
 
-endmodule; 
+endmodule
 

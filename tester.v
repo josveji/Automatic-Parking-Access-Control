@@ -42,17 +42,20 @@ module tests (
     // Activa el reset para iniciar en el estado Esperando carro (0)
     clk = 0; 
     #0 rst = 1;
-    #1 rst = 0;
-
+    #0 sensor_1 = 0; // Valor inicial de sensor_1
+    #0 sensor_2 = 0; // Valor inicial de sensor_2
+    #0 try_psswrd = 0; // Valor inicial de try_psswrd
+    #5 rst = 0;
+    
     // ----------Prueba #1 - Funcionamiento normal básico---------------
     #2 sensor_1 = 1; // Pasa al estado Ingresando Contraseña (1)
     #2 try_psswrd = 1; // Se activa la señal para verificar contraseña
     #2 psswrd_atmpt = 01010111; /* Ingresa la contraseña correcta, 
     pasa a estado Ingreso Autorizado (2)*/
-    #4 try_psswrd = 0; /* Se activa la señal para verificar contraseña, 
+    #2 try_psswrd = 0; /* Se activa la señal para verificar contraseña, 
     pues ya no es necesario*/
-    #2 sensor_1 = 0; // Ya no se detectan carros en la entrada
-    #2 sensor_2 = 1; // El carro ingresa al parqueo, pasa al estado (0) 
+    #1 sensor_1 = 0; // Ya no se detectan carros en la entrada
+    #4 sensor_2 = 1; // El carro ingresa al parqueo, pasa al estado (0) 
     #2 sensor_2 = 0; // El sensor deja de detectar, pues el carro ya pasó
 
     // ------Prueba 2 - Ingreso de pin incorrecto menos de 3 veces------
@@ -76,9 +79,9 @@ module tests (
     #2 try_psswrd = 0; /* Se desactiva la señal verificar contraseña,
     pues ya se verificó, contador = 0 */
     // Ingreso Autorizado
-    #2 sensor_1 = 0; // Ya no se detectan carros en la entrada
-    #2 sensor_2 = 1; // El carro ingresa al parqueo, pasa al estado (0) 
-    #2 sensor_2 = 0; // El sensor deja de detectar, pues el carro ya entró
+    #1 sensor_1 = 0; // Ya no se detectan carros en la entrada
+    #4 sensor_2 = 1; // El carro ingresa al parqueo, pasa al estado (0) 
+    #4 sensor_2 = 0; // El sensor deja de detectar, pues el carro ya entró
 
     // --------------------------Fin Prueba 2---------------------------
 
@@ -119,6 +122,10 @@ module tests (
     #0 sensor_2 = 1; // Se activa el sensor 2, pasa a estado de bloqueo (3)
 
     // Ingresando contraseña incorrecta
+    //Peuba
+    #4 sensor_1 = 0; // Se desactiva sensor 1 
+    #0 sensor_2 = 0; // Se desactiva sensor 2
+    //fin 
     #2 psswrd_atmpt = 01011111; // Se ingresa contraseña incorrecta
     #2 try_psswrd = 1; // Se activa la señal para verificar contraseña
     #2 try_psswrd = 0; /* Se desactiva la señal verificar contraseña,
@@ -127,10 +134,10 @@ module tests (
     // Ingresando contraseña correcta
     #2 psswrd_atmpt = 01010111; // Se ingresa contraseña correcta
     #2 try_psswrd = 1; // Se activa la señal para verificar contraseña
+    #2 try_psswrd = 0; 
     //#2 try_psswrd = 0; /* Se desactiva la señal verificar contraseña,
     //pasa al estado (0), se desactiva la alarma de bloqueo*/    
-    #2 sensor_1 = 0; // Se desactiva sensor 1 
-    #2 sensor_2 = 0; // Se desactiva sensor 2
+    
 
     // --------------------------Fin Prueba 4---------------------------
     #200 $finish; // Fin de las pruebas

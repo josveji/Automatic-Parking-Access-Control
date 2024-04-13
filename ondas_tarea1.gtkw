@@ -1,0 +1,37 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sat Apr 13 00:24:06 2024
+[*]
+[dumpfile] "C:\Users\josue\OneDrive\Documentos\Universidad\2024\Circuitos Digitales II\Tarea 1\Repo\Automatic-Parking-Access-Control\resultados_apac.vcd"
+[dumpfile_mtime] "Sat Apr 13 00:21:27 2024"
+[dumpfile_size] 4223
+[savefile] "C:\Users\josue\OneDrive\Documentos\Universidad\2024\Circuitos Digitales II\Tarea 1\Repo\Automatic-Parking-Access-Control\ondas_tarea1.gtkw"
+[timestart] 0
+[size] 1536 801
+[pos] -113 -113
+*-4.473395 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] apac_tb.
+[sst_width] 197
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 224
+@28
+apac_tb.U0.rst
+apac_tb.U0.clk
+@22
+apac_tb.U0.state[4:0]
+@28
+apac_tb.U0.sensor_1
+apac_tb.U0.sensor_2
+apac_tb.U0.try_psswrd
+@22
+apac_tb.U0.psswrd_atmpt[7:0]
+apac_tb.U0.count0[4:0]
+@28
+apac_tb.U0.open_gate
+apac_tb.U0.close_gate
+apac_tb.U0.alarm_1
+@29
+apac_tb.U0.alarm_2
+[pattern_trace] 1
+[pattern_trace] 0
