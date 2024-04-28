@@ -9,7 +9,11 @@ Descripción del archivo: Este es el código encargado de evaluar las pruebas de
 */
 
 `include "tester.v" // Incluyendo archivo de pruebas
-`include "Automatic-Parking-Access-Control.v" // Incluyendo máquina de estados
+//`include "Automatic-Parking-Access-Control.v" // Incluyendo máquina de estados
+//`include "APAC_rtlil.v"
+`include "APAC_synth.v"
+`include "cmos_cells.v"
+
 
 // Decclaración del módulo 
 
