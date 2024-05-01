@@ -29,6 +29,7 @@ input [7:0] psswrd_atmpt;  // Intento de contraseña
 
 
 output reg alarm_1, alarm_2, open_gate, close_gate; // Declarando las salidas
+output reg nx_alarm_1, nx_alarm_2, nx_open_gate, nx_close_gate; // Declarando salidas futuras 
 
 // Declarando variables internas
 reg [4:0] state; 
@@ -44,9 +45,19 @@ always @(posedge clk) begin
   if (rst) begin
     state <= 4'b0000;
     count0 <= 2'b00;
+    alarm_1 <= 0;
+    alarm_2 <= 0; 
+    open_gate <= 0; 
+    close_gate <= 0;
+
   end else begin
     state <= nxt_state;
     count0 <= nxt_count0;
+    alarm_1 <= nx_alarm_1;
+    alarm_2 <= nx_alarm_2; 
+    open_gate <= nx_open_gate; 
+    close_gate <= nx_close_gate;
+    
   end
 end /* Acá termina la declaración de FFs. Se utilizan asignaciones no
  bloqueantes para tener sequencialidad*/
@@ -59,6 +70,17 @@ always @(*) begin
 
     nxt_count0 = count0;
 
+// Añadiendo FF para salidas
+    nx_alarm_1 = alarm_1;
+
+    nx_alarm_2 = alarm_2; 
+
+    nx_open_gate = open_gate; 
+
+    nx_close_gate = close_gate;
+
+
+
     case(state)
 
     /* Los estados son: 
@@ -69,14 +91,15 @@ always @(*) begin
     */
       // Estado (0)
         4'b0000: begin 
-                    close_gate = 0; // Valor incial de close_gate
+                    /*close_gate = 0; // Valor incial de close_gate
                     open_gate = 0; // Valor incial de open_gate
                     alarm_1 = 0; // Valor incial de alarm_1
-                    alarm_2 = 0; // Valor incial de alarm_2
+                    alarm_2 = 0; // Valor incial de alarm_2*/
                     if (sensor_1 && sensor_2) begin /* Si se activan simultáneamente
                      sensor_1 y sensor_2*/
                       nxt_state = 4'b0011; // Va al estado (3)
-                      alarm_2 = 1; // Activa alarma de bloqueo
+                      //alarm_2 = 1; // Activa alarma de bloqueo
+                      nx_alarm_2 = 1;
                     end 
                     else if (sensor_1) nxt_state = 4'b0001; // Va al estado (1)
                     else nxt_state = 4'b0000; // Vuelve al estado (0)
@@ -87,12 +110,13 @@ always @(*) begin
                     if (sensor_1 && sensor_2) begin /* Si se activan simultáneamente
                     sensor_1 y sensor_2*/
                       nxt_state = 4'b0011; // Va al estado (3)
-                      alarm_2 = 1; // Activa alarma de bloqueo
+                      //alarm_2 = 1; // Activa alarma de bloqueo
+                      nx_alarm_2 = 1; 
                     end 
                     else if (try_psswrd) begin // Si la señal verificar está activa
                       // Si la contraseña es correcta
                       if (psswrd_atmpt == psswrd) begin
-                        open_gate = 1; // Activa señal de abrir aguja
+                        nx_open_gate = 1; // Activa señal de abrir aguja
                         nxt_count0 = 0; // Limpia contador de intentos incorrectos
                         nxt_state = 4'b0010; // Va al estado (2)
                       end
@@ -103,7 +127,7 @@ always @(*) begin
                         nxt_state = 4'b0001; // Vuelve al estado (1)
                       end 
                     end 
-                    else if (nxt_count0 == 3) alarm_1 = 1; // Activa alarma de pin
+                    else if (nxt_count0 == 3) nx_alarm_1 = 1; // Activa alarma de pin
                     else nxt_state = 4'b0001; /* Devuelve al estado (1) en
                     cualquier otro caso */
                  end // Termina estado (1)
@@ -113,11 +137,12 @@ always @(*) begin
                     if (sensor_1 && sensor_2) begin /* Si se activan 
                     simultáneamente sensor_1 y sensor_2*/
                         nxt_state = 4'b0011; // Va al estado (3)
-                        alarm_2 = 1; // Activa alarma de bloqueo
+                        //alarm_2 = 1; // Activa alarma de bloqueo
+                        nx_alarm_2 = 1; 
                     end 
                     else if (sensor_2) begin
-                        open_gate = 0; // Desactiva señal de abrir aguja
-                        close_gate = 1; // Activa señal de cerrar aguja
+                        nx_open_gate = 0; // Desactiva señal de abrir aguja
+                        nx_close_gate = 1; // Activa señal de cerrar aguja
                         nxt_state = 4'b0000; // Va al estado (0)
                     end else nxt_state = 4'b0010; /* Vuelve al estado (2) a 
                     espera que pase el carro*/
@@ -128,7 +153,7 @@ always @(*) begin
                     if (try_psswrd) begin // Si la señal verificar está activa
                       // Si la contraseña es correcta
                       if (psswrd_atmpt == psswrd) begin
-                        alarm_2 = 0; // Apaga alarma bloqueo 
+                        nx_alarm_2 = 0; // Apaga alarma bloqueo 
                         nxt_state = 4'b0000; // Pasa al estado (0)
                       end else nxt_state = 4'b0011; // Pasa al estado (3) 
                     end 
