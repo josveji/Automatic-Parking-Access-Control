@@ -11,7 +11,8 @@ estados para un controlador automatizado para entrada de un estacionamiento.
 // Declaración del módulo 
 
 module ControladorParqueo (clk, rst, sensor_1, sensor_2, try_psswrd,
-psswrd_atmpt, alarm_1, alarm_2, open_gate, close_gate);
+psswrd_atmpt, alarm_1, alarm_2, open_gate, close_gate, nx_alarm_1, nx_alarm_2,
+nx_open_gate, nx_close_gate);
 
 /* sensor_1 = sensor que detecta llegada de un carro 
    sensor_2 = sensor que detecta si ya entró el carro
