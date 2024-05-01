@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
-[*] Wed May  1 02:01:29 2024
+[*] Wed May  1 20:31:17 2024
 [*]
 [dumpfile] "/home/josue/Documents/Tarea1_Digitales_II/Repo/Automatic-Parking-Access-Control/resultados_apac.vcd"
-[dumpfile_mtime] "Wed May  1 02:00:26 2024"
-[dumpfile_size] 3700
+[dumpfile_mtime] "Wed May  1 20:30:41 2024"
+[dumpfile_size] 24221
 [savefile] "/home/josue/Documents/Tarea1_Digitales_II/Repo/Automatic-Parking-Access-Control/ondas_tarea1.gtkw"
 [timestart] 0
 [size] 1536 801
 [pos] -1 -1
-*-4.473395 26 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-7.839712 26 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] apac_tb.
 [sst_width] 278
 [signals_width] 166
